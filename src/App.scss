@@ -1,0 +1,45 @@
+#new-game-btn {
+	border: 1px solid white;
+	padding: 4px 10px;
+	border-radius: 5px;
+}
+
+.game-container {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 10px;
+	.card {
+		background-color: rgb(255, 255, 255);
+		color: black;
+		padding: 10px;
+		height: 150px;
+		width: 150px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		cursor: pointer;
+		opacity: 1;
+		transition: 0.3s;
+		border-radius: 8px;
+		user-select: none;
+		&.show {
+			background-image: url("./assets/images/scout.webp");
+			background-position: center;
+			background-repeat: no-repeat;
+			background-attachment: fixed;
+			background-size: contain;
+
+			transform: rotateY(180deg);
+			.card-image {
+				color: rgb(255, 255, 255);
+				opacity: 0;
+			}
+		}
+		.card-image {
+			mix-blend-mode: multiply;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+	}
+}
