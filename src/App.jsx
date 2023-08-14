@@ -150,7 +150,7 @@ function App() {
 						</button>
 					))}
 				</div>
-				<div>tries: {tries}</div>
+				<div className="tries">tries: {tries}</div>
 			</div>
 		</div>
 	);
