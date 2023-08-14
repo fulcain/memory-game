@@ -17,12 +17,12 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		flex-wrap: wrap;
 		cursor: pointer;
 		opacity: 1;
 		transition: 0.3s;
 		border-radius: 8px;
 		user-select: none;
+		overflow: hidden;
 		&.show {
 			background-image: url("../assets/images/scout.webp");
 			background-position: center;
