@@ -5,6 +5,7 @@ import "./App.scss";
 
 // Import components
 import NewGameButton from "./components/NewGameButton/NewGameButton";
+import Cards from "./components/Cards/Cards";
 
 // Context
 import { CardContext } from "./context/CardContext";
@@ -150,31 +151,8 @@ function App() {
 					{/* New game button */}
 					<NewGameButton />
 
-					{/* TODO: Create 2 new components / Cards / Card
-					 */}
 					{/* Game container */}
-					<div className="game-container">
-						{cards.map((item, idx) => (
-							<button
-								className={
-									!item.showItem ? "card show" : "card"
-								}
-								key={idx}
-								onClick={() => {
-									if (amountOfClickedCards !== 2) {
-										handleClickingCards(idx);
-									}
-								}}
-								disabled={item.showItem}
-							>
-								<img
-									src={item.src}
-									className="card-image"
-									draggable="false"
-								/>
-							</button>
-						))}
-					</div>
+					<Cards />
 					<div className="tries">tries: {tries}</div>
 				</div>
 			</div>
