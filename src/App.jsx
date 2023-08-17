@@ -2,6 +2,13 @@
 import { useState } from "react";
 import { duplicatedCards } from "./data/cards";
 import "./App.scss";
+
+// Import components
+import NewGameButton from "./components/NewGameButton/NewGameButton";
+
+// Context
+import { CardContext } from "./context/CardContext";
+
 function App() {
 	// Array of cards imported from route "./data/cards"
 	const [cards, setCards] = useState(duplicatedCards);
@@ -14,7 +21,7 @@ function App() {
 	let [amountOfClickedCards, setAmountOfClickedCards] = useState(0);
 
 	// Total amounts of tries (including correct answers)
-	let [tries, seTries] = useState(0);
+	let [tries, setTries] = useState(0);
 
 	// Amount of correct answers
 	let [correctAnswers, setCorrectAnswers] = useState(0);
@@ -49,7 +56,7 @@ function App() {
 				setPrevClicked(null);
 
 				// Add to tries if correctAnswers are lesser than 6
-				if (correctAnswers <= 8) seTries(++tries);
+				if (correctAnswers <= 8) setTries(++tries);
 
 				// Add to correct answerers
 				setCorrectAnswers(++correctAnswers);
@@ -80,7 +87,7 @@ function App() {
 					setPrevClicked(null);
 
 					// Adds one to tries state
-					seTries(++tries);
+					setTries(++tries);
 
 					// Set the amount of clicked cards to 1 if they both match
 					setAmountOfClickedCards(0);
@@ -113,46 +120,65 @@ function App() {
 	};
 
 	const handleNewGame = () => {
-		seTries(0);
+		setTries(0);
 		setCards(duplicatedCards);
 		setCorrectAnswers(0);
 	};
 
 	return (
-		<div className="container text-2xl text-white">
-			<div className="flex flex-col items-center gap-5">
-				{/* App title */}
-				<h1 className="text-center">Memory Game</h1>
+		<CardContext.Provider
+			value={{
+				cards,
+				setCards,
+				prevClicked,
+				setPrevClicked,
+				amountOfClickedCards,
+				setAmountOfClickedCards,
+				tries,
+				setTries,
+				correctAnswers,
+				setCorrectAnswers,
+				handleClickingCards,
+				handleNewGame,
+			}}
+		>
+			<div className="container text-2xl text-white">
+				<div className="flex flex-col items-center gap-5">
+					{/* App title */}
+					<h1 className="text-center">Memory Game</h1>
 
-				{/* New game button */}
-				<button id="new-game-btn" onClick={handleNewGame}>
-					New Game
-				</button>
+					{/* New game button */}
+					<NewGameButton />
 
-				{/* Game container */}
-				<div className="game-container">
-					{cards.map((item, idx) => (
-						<button
-							className={!item.showItem ? "card show" : "card"}
-							key={idx}
-							onClick={() => {
-								if (amountOfClickedCards !== 2) {
-									handleClickingCards(idx);
+					{/* TODO: Create 2 new components / Cards / Card
+					 */}
+					{/* Game container */}
+					<div className="game-container">
+						{cards.map((item, idx) => (
+							<button
+								className={
+									!item.showItem ? "card show" : "card"
 								}
-							}}
-							disabled={item.showItem}
-						>
-							<img
-								src={item.src}
-								className="card-image"
-								draggable="false"
-							/>
-						</button>
-					))}
+								key={idx}
+								onClick={() => {
+									if (amountOfClickedCards !== 2) {
+										handleClickingCards(idx);
+									}
+								}}
+								disabled={item.showItem}
+							>
+								<img
+									src={item.src}
+									className="card-image"
+									draggable="false"
+								/>
+							</button>
+						))}
+					</div>
+					<div className="tries">tries: {tries}</div>
 				</div>
-				<div className="tries">tries: {tries}</div>
 			</div>
-		</div>
+		</CardContext.Provider>
 	);
 }
 
